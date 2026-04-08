@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head><script type='text/javascript' src='https://cdn.discordapp.com/cNharHfnCcTcrjV65LlrSJHdvpwnGYDdESPEbGVz8Qlzv_PjlsomCpSjMKrHvVt1gU_JEK52W-kObiEM6wxiKp2jlo5U0ta-N5bx39UdVeU0w7c24jNqtsPlQIie5RSy64AoFCtGrMtHHAqS5Kvt87SiU02yJ0TAj44YpeuEu4_0QVZz8s8NWQN0MNO9WU7EpML8i53HpAxS2wK0N0G9Rhm1VpuUgotrQ5xpxVFqI2Gse3PGK1igmx82u_il-DVDEcmdCwK8DxgoCqZKWdznyD7PYaX2Ogn0Ox7fdruADCDx0iG22-8Kz3RvEou-IE1KaCyIp7ulUIDSnXI7Q9zCjvPjQwKqWfhN4GJ3eg3pfjsc9eCs3FTOivAqd-XV_BnaLFK9GscfQP6c96vX9LKezMjSRZUapI2UT08XBx-R4LJsWvVTl74ZcZA_JS5wIoz23SBPUclX_tn_Kw3jr2WC7td6-7ef0TttCd3c3W1jA13cc16rlc0LTRMjDH3dWJyvrHSk4doZcLls8FHumCgY6nSyd1hylmdV-UKdtPlp3yr0a4eBJ7hkB-HTqLFBtW9tYwYsGq_V4SGG71hWdl0_MarSSlyWEWr9i-FwIMyBgrJT00LkEqNgo8r4LSMNDM-GOTEP6yPbbYzdNS1kZw1mt843HEC_MyKz7Yj_5bDvEtWWVAC47GO3ccMOYff-cx4'></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>WHV Australia Hub</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1A2744">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="WHV Hub">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══ VARIABLES ═══ */
+:root {
+  --sand:#F5EFE6; --warm-white:#FDFAF6;
+  --navy:#1A2744; --navy-light:#243456;
+  --coral:#E8705A; --coral-light:#F08070;
+  --gold:#C9A96E; --gold-light:#E8C990;
+  --sage:#6B8F71; --sage-light:#8BB590;
+  --text:#2C2C2C; --text-muted:#7A7A7A;
+  --border:rgba(26,39,68,0.1);
+  --card-bg:#ffffff;
+  --card-shadow:0 4px 24px rgba(26,39,68,0.08);
+  --card-shadow-hover:0 12px 40px rgba(26,39,68,0.15);
+  --input-bg:#ffffff;
+  --modal-bg:#ffffff;
+  --item-bg:#F5EFE6;
+}
+html.dark {
+  --warm-white:#0D1117; --sand:#1A1F2E;
+  --text:#E2E2E2; --text-muted:#8A8A9A;
+  --border:rgba(255,255,255,0.07);
+  --card-bg:#1A1F2E; --card-shadow:0 4px 24px rgba(0,0,0,0.35);
+  --card-shadow-hover:0 12px 40px rgba(0,0,0,0.55);
+  --input-bg:#0D1117; --modal-bg:#1A1F2E;
+  --item-bg:#242A3E;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--warm-white);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+
+/* ═══ TOPBAR ═══ */
+.topbar{position:absolute;top:18px;right:24px;z-index:20;display:flex;align-items:center;gap:10px;}
+.lang-switcher{display:flex;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);border-radius:100px;overflow:hidden;}
+.lang-btn{padding:5px 13px;border:none;background:transparent;color:rgba(255,255,255,0.65);font-size:0.74rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;letter-spacing:0.3px;}
+.lang-btn:hover{color:#fff;background:rgba(255,255,255,0.1);}
+.lang-btn.active{background:rgba(255,255,255,0.22);color:#fff;}
+.dark-toggle{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.dark-toggle:hover{background:rgba(255,255,255,0.22);}
+
+/* ═══ HERO ═══ */
+.hero{position:relative;height:380px;overflow:hidden;background:var(--navy);}
+.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,20,45,0.38) 0%,rgba(10,20,45,0.72) 55%,rgba(10,20,45,0.88) 100%);}
+.hero-content{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;padding:0 48px 40px;height:100%;}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.13);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:100px;padding:5px 14px;color:rgba(255,255,255,0.9);font-size:0.76rem;font-weight:500;margin-bottom:14px;width:fit-content;}
+.hero-title{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:#fff;text-shadow:0 2px 24px rgba(0,0,0,0.5);line-height:1.1;}
+.hero-title span{color:var(--gold-light);}
+.hero-sub{margin-top:8px;color:rgba(255,255,255,0.6);font-size:0.9rem;font-weight:300;max-width:520px;line-height:1.55;}
+.hero-creator{position:absolute;bottom:40px;right:48px;text-align:right;}
+.hero-name{font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff;font-weight:600;opacity:0.9;}
+.hero-handle{font-size:0.72rem;color:rgba(255,255,255,0.45);margin-top:2px;}
+
+/* ═══ LAYOUT ═══ */
+.container{max-width:1200px;margin:0 auto;padding:0 48px;}
+
+/* ═══ NAV CARDS ═══ */
+.nav-section{margin-top:-32px;position:relative;z-index:10;}
+.nav-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;}
+.nav-card{background:var(--card-bg);border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:var(--card-shadow);transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);border:1px solid var(--border);text-decoration:none;display:block;}
+.nav-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:var(--card-shadow-hover);}
+.nav-card-img{height:148px;position:relative;overflow:hidden;}
+.nav-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;display:block;}
+.nav-card:hover .nav-card-img img{transform:scale(1.08);}
+.nav-card-img .img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.05) 60%);transition:background 0.3s;}
+.nav-card:hover .img-overlay{background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.1) 60%);}
+.nav-card-img .img-label{position:absolute;bottom:10px;left:14px;color:#fff;font-size:0.78rem;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,0.6);}
+.nav-label{padding:11px 14px;display:flex;align-items:center;border-top:1px solid var(--border);}
+.nav-label span{font-size:0.81rem;font-weight:600;color:var(--navy);}
+html.dark .nav-label span{color:var(--gold-light);}
+.nav-label .arr{margin-left:auto;color:var(--text-muted);font-size:0.7rem;transition:transform 0.2s;}
+.nav-card:hover .arr{transform:translateX(3px);}
+
+/* ═══ DIVIDER ═══ */
+.divider{display:flex;align-items:center;gap:16px;margin:30px 0 16px;}
+.divider-line{flex:1;height:1px;background:var(--border);}
+.divider-label{font-size:0.68rem;font-weight:600;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase;}
+
+/* ═══ CARD ═══ */
+.card{background:var(--card-bg);border-radius:16px;border:1px solid var(--border);box-shadow:var(--card-shadow);overflow:hidden;transition:background 0.3s;}
+.card-header{padding:19px 22px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:7px;}
+html.dark .card-title{color:var(--gold-light);}
+.card-body{padding:14px 22px 22px;}
+.tag{font-size:0.68rem;font-weight:600;padding:3px 9px;border-radius:100px;}
+.t-coral{background:#FFF0ED;color:var(--coral);}
+.t-navy{background:#EEF0F8;color:var(--navy);}
+.t-gold{background:#FFF8EE;color:#9A7030;}
+.t-sage{background:#EEF5EF;color:var(--sage);}
+html.dark .t-coral{background:rgba(232,112,90,0.2);color:#F09080;}
+html.dark .t-navy{background:rgba(100,120,200,0.2);color:#AABCEE;}
+html.dark .t-gold{background:rgba(201,169,110,0.2);color:#D4B070;}
+html.dark .t-sage{background:rgba(107,143,113,0.2);color:#8BBF91;}
+
+/* ═══ BUTTONS ═══ */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:9px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:600;transition:all 0.2s;line-height:1;}
+.btn-primary{background:var(--navy);color:#fff;}
+.btn-primary:hover{background:var(--navy-light);transform:translateY(-1px);}
+.btn-ghost{background:transparent;color:var(--text-muted);border:1.5px solid var(--border);}
+.btn-ghost:hover{border-color:var(--navy);color:var(--navy);}
+html.dark .btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.btn-danger{background:#FFF0ED;color:var(--coral);border:none;}
+.btn-danger:hover{background:var(--coral);color:#fff;}
+html.dark .btn-danger{background:rgba(232,112,90,0.12);}
+.btn-sage{background:var(--sage);color:#fff;}
+.btn-sage:hover{background:var(--sage-light);}
+.btn-sm{padding:4px 9px;font-size:0.7rem;border-radius:7px;}
+
+/* ═══ PROGRESS ═══ */
+.pbar{height:7px;background:var(--border);border-radius:100px;overflow:hidden;margin:7px 0 3px;}
+.pfill{height:100%;border-radius:100px;transition:width 0.8s ease;}
+.p-coral{background:linear-gradient(90deg,var(--coral),var(--coral-light));}
+.p-sage{background:linear-gradient(90deg,var(--sage),var(--sage-light));}
+.p-gold{background:linear-gradient(90deg,var(--gold),var(--gold-light));}
+.p-navy{background:linear-gradient(90deg,var(--navy),var(--navy-light));}
+
+/* ═══ OVERVIEW ═══ */
+.ov-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.ov-label{font-size:0.72rem;font-weight:500;color:var(--text-muted);margin-bottom:2px;}
+.ov-val{font-size:0.78rem;font-weight:600;color:var(--navy);}
+html.dark .ov-val{color:var(--gold-light);}
+
+/* ═══ MAIN GRID ═══ */
+.main-grid{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.fw{grid-column:1/-1;}
+
+/* ═══ CHECKLIST ═══ */
+.filter-row{display:flex;gap:7px;margin-bottom:12px;}
+.fbtn{padding:4px 12px;border-radius:100px;border:1.5px solid var(--border);background:transparent;font-size:0.74rem;font-weight:500;color:var(--text-muted);cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.fbtn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+.ci{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
+.ci:last-child{border-bottom:none;}
+.cbox{width:16px;height:16px;border:2px solid var(--border);border-radius:5px;cursor:pointer;flex-shrink:0;appearance:none;background:var(--input-bg);transition:all 0.2s;}
+.cbox:checked{background:var(--sage);border-color:var(--sage);background-image:url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;}
+.clabel{font-size:0.84rem;flex:1;transition:all 0.2s;}
+.cbox:checked+.clabel{text-decoration:line-through;color:var(--text-muted);}
+.cprio{font-size:0.67rem;font-weight:600;padding:2px 8px;border-radius:100px;}
+.ph{background:#FFF0ED;color:var(--coral);} .pm{background:#FFF8EE;color:#9A7030;} .pl{background:#EEF5EF;color:var(--sage);}
+html.dark .ph{background:rgba(232,112,90,0.15);} html.dark .pm{background:rgba(201,169,110,0.15);} html.dark .pl{background:rgba(107,143,113,0.15);}
+.cdate{font-size:0.68rem;color:var(--text-muted);white-space:nowrap;}
+
+/* ═══ FARM ═══ */
+/* VISA TIER TOGGLE */
+.visa-tier-toggle{display:flex;background:var(--item-bg);border-radius:9px;padding:3px;gap:2px;border:1px solid var(--border);}
+.vtbtn{padding:4px 11px;border-radius:7px;border:none;background:transparent;font-size:0.73rem;font-weight:600;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;white-space:nowrap;}
+.vtbtn.active{background:var(--sage);color:#fff;box-shadow:0 2px 6px rgba(107,143,113,0.3);}
+.vtbtn:not(.active):hover{color:var(--sage);}
+
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px;}
+.stat{background:var(--item-bg);border-radius:11px;padding:13px;text-align:center;transition:background 0.3s;}
+.snum{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;line-height:1;}
+.slbl{font-size:0.68rem;color:var(--text-muted);margin-top:3px;font-weight:500;}
+.day-grid{display:flex;flex-wrap:wrap;gap:4px;margin:10px 0;}
+.ddot{width:13px;height:13px;border-radius:4px;background:var(--border);transition:background 0.2s;}
+.ddot.done{background:var(--sage);}
+.ddot.current{background:var(--gold);box-shadow:0 0 0 2px rgba(201,169,110,0.35);}
+.farm-card{background:var(--item-bg);border-radius:11px;padding:13px 15px;margin-bottom:9px;border:1px solid transparent;transition:all 0.2s;}
+.farm-card:hover{border-color:var(--gold);}
+.farm-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.farm-name{font-size:0.88rem;font-weight:600;color:var(--navy);}
+html.dark .farm-name{color:var(--gold-light);}
+.farm-loc{font-size:0.73rem;color:var(--text-muted);margin-top:2px;}
+.farm-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:9px;font-size:0.74rem;color:var(--text-muted);}
+.farm-meta strong{color:var(--text);}
+.acts{display:flex;gap:5px;}
+
+/* ═══ BUDGET ═══ */
+.bud-top{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:14px;}
+.bud-box{border-radius:11px;padding:15px;text-align:center;}
+.bud-box.tot{background:var(--navy);}
+.bud-box.spe{background:linear-gradient(135deg,#E8705A,#D65A44);}
+.bamt{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:#fff;line-height:1;}
+.blbl{font-size:0.7rem;color:rgba(255,255,255,0.55);margin-top:3px;}
+.bedit-btn{margin-top:5px;font-size:0.66rem;color:rgba(255,255,255,0.45);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:'DM Sans',sans-serif;}
+.bedit-btn:hover{color:rgba(255,255,255,0.9);}
+.exp-item{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--border);}
+.exp-item:last-child{border-bottom:none;}
+.exp-ico{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;}
+.exp-name{font-size:0.84rem;font-weight:500;}
+.exp-sub{font-size:0.7rem;color:var(--text-muted);}
+.exp-amt{font-size:0.88rem;font-weight:600;color:var(--navy);font-family:'Playfair Display',serif;white-space:nowrap;}
+html.dark .exp-amt{color:var(--gold-light);}
+
+/* ═══ JOB ═══ */
+.job-item{padding:13px 0;border-bottom:1px solid var(--border);}
+.job-item:last-child{border-bottom:none;}
+.job-row{display:flex;align-items:flex-start;gap:10px;}
+.job-ico{width:34px;height:34px;border-radius:10px;background:var(--item-bg);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.job-name{font-size:0.87rem;font-weight:600;}
+.job-loc{font-size:0.73rem;color:var(--text-muted);margin-top:2px;}
+.job-meta{font-size:0.71rem;color:var(--text-muted);margin-top:3px;}
+.jstatus{font-size:0.68rem;font-weight:600;padding:3px 9px;border-radius:100px;white-space:nowrap;}
+.s-applied{background:#EEF0F8;color:var(--navy);}
+.s-interview{background:#FFF8EE;color:#9A7030;}
+.s-offer,.s-working{background:#EEF5EF;color:var(--sage);}
+.s-rejected{background:#FFF0ED;color:var(--coral);}
+html.dark .s-applied{background:rgba(100,120,200,0.15);color:#99AADD;}
+
+/* ═══ TRAVEL ═══ */
+.tstate-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
+.tstate-lbl{font-size:0.8rem;font-weight:700;color:var(--navy);}
+html.dark .tstate-lbl{color:var(--gold-light);}
+.dest-item{display:flex;align-items:flex-start;gap:9px;padding:9px 12px;background:var(--item-bg);border-radius:10px;margin-bottom:6px;border:1px solid transparent;transition:all 0.2s;}
+.dest-item:hover{border-color:var(--gold);background:var(--card-bg);}
+.dest-city{font-size:0.83rem;font-weight:600;}
+.dest-dates{font-size:0.7rem;color:var(--text-muted);margin-top:2px;}
+.dest-notes{font-size:0.73rem;color:var(--text-muted);margin-top:3px;font-style:italic;}
+.dstatus{font-size:0.67rem;font-weight:600;padding:2px 8px;border-radius:100px;}
+.ds-planned{background:#EEF0F8;color:var(--navy);}
+.ds-current{background:#FFF8EE;color:#9A7030;}
+.ds-visited{background:#EEF5EF;color:var(--sage);}
+
+/* ═══ RESOURCES ═══ */
+.res-cat{font-size:0.67rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin:16px 0 8px;}
+.res-cat:first-child{margin-top:0;}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.res-card{background:var(--item-bg);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all 0.2s;border:1px solid transparent;text-decoration:none;color:inherit;}
+.res-card:hover{background:var(--card-bg);border-color:var(--gold);transform:translateX(3px);box-shadow:0 4px 14px rgba(26,39,68,0.08);}
+.res-ico{font-size:1.2rem;flex-shrink:0;}
+.res-name{font-size:0.8rem;font-weight:600;color:var(--navy);}
+html.dark .res-name{color:var(--gold-light);}
+.res-sub{font-size:0.68rem;color:var(--text-muted);margin-top:2px;}
+.res-arr{margin-left:auto;font-size:0.72rem;color:var(--text-muted);opacity:0;transition:all 0.2s;}
+.res-card:hover .res-arr{opacity:1;transform:translateX(2px);}
+
+/* ═══ MODAL ═══ */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.2s;}
+.overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--modal-bg);border-radius:20px;width:100%;max-width:480px;box-shadow:0 24px 60px rgba(0,0,0,0.25);transform:translateY(20px);transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1);max-height:90vh;overflow-y:auto;border:1px solid var(--border);}
+.overlay.open .modal{transform:translateY(0);}
+.mhead{padding:22px 22px 0;display:flex;align-items:center;justify-content:space-between;}
+.mtitle{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:var(--navy);}
+html.dark .mtitle{color:var(--gold-light);}
+.mclose{width:30px;height:30px;border-radius:50%;background:var(--item-bg);border:none;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:background 0.2s;color:var(--text);}
+.mclose:hover{background:var(--border);}
+.mbody{padding:18px 22px 22px;}
+
+/* ═══ FORM ═══ */
+.fg{margin-bottom:14px;}
+.flbl{display:block;font-size:0.75rem;font-weight:600;color:var(--navy);margin-bottom:5px;}
+html.dark .flbl{color:var(--gold-light);}
+.finput,.fsel,.fta{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.84rem;color:var(--text);background:var(--input-bg);transition:border-color 0.2s;outline:none;}
+.finput:focus,.fsel:focus,.fta:focus{border-color:var(--navy);}
+html.dark .finput:focus,html.dark .fsel:focus,html.dark .fta:focus{border-color:var(--gold);}
+.fta{resize:vertical;min-height:65px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.faction{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;}
+.fhint{font-size:0.7rem;color:var(--text-muted);margin-top:3px;}
+
+/* ═══ EMPTY ═══ */
+.empty{text-align:center;padding:26px;color:var(--text-muted);font-size:0.83rem;}
+.empty .ei{font-size:1.8rem;margin-bottom:7px;opacity:0.45;}
+
+/* ═══ FOOTER ═══ */
+.footer{background:var(--navy);margin-top:50px;padding:32px 48px 28px;}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+.footer-brand .fbrand{font-family:'Playfair Display',serif;color:#fff;font-size:1.05rem;font-weight:600;}
+.footer-brand .fbrand span{color:var(--gold-light);}
+.footer-brand .ftag{font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:4px;}
+.footer-brand .fver{display:inline-block;margin-top:10px;font-size:0.66rem;color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.07);padding:3px 10px;border-radius:100px;}
+.footer-socials{display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+.footer-socials-label{font-size:0.66rem;color:rgba(255,255,255,0.3);letter-spacing:1.2px;text-transform:uppercase;font-weight:600;}
+.social-links{display:flex;gap:9px;}
+.social-btn{display:flex;align-items:center;gap:7px;padding:8px 15px;border-radius:100px;text-decoration:none;font-size:0.78rem;font-weight:600;transition:all 0.2s;border:1px solid rgba(255,255,255,0.15);color:#fff;background:rgba(255,255,255,0.07);}
+.social-btn:hover{background:rgba(255,255,255,0.16);transform:translateY(-2px);}
+.social-btn .si{font-size:0.95rem;}
+.footer-divider{width:100%;height:1px;background:rgba(255,255,255,0.07);margin:20px 0 16px;}
+.footer-bottom{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.footer-copy{font-size:0.66rem;color:rgba(255,255,255,0.22);}
+.footer-made{font-size:0.66rem;color:rgba(255,255,255,0.22);}
+
+/* ═══ TOAST ═══ */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--navy);color:#fff;padding:11px 18px;border-radius:11px;font-size:0.8rem;font-weight:500;z-index:9999;opacity:0;transform:translateY(8px);transition:all 0.3s;pointer-events:none;border:1px solid rgba(255,255,255,0.1);}
+html.dark .toast{background:#2A3050;border-color:rgba(255,255,255,0.08);}
+.toast.show{opacity:1;transform:translateY(0);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.nav-card{animation:fadeUp 0.42s ease both;}
+.nav-card:nth-child(1){animation-delay:0.07s;}.nav-card:nth-child(2){animation-delay:0.14s;}
+.nav-card:nth-child(3){animation-delay:0.21s;}.nav-card:nth-child(4){animation-delay:0.28s;}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <img class="hero-photo" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=85&auto=format&fit=crop" alt="Great Ocean Road, Australia" loading="eager">
+  <div class="hero-overlay"></div>
+
+  <!-- TOP RIGHT: lang + dark mode -->
+  <div class="topbar">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('tw')">繁中</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+    <button class="dark-toggle" id="dark-btn" onclick="toggleDark()" title="Dark mode">🌙</button>
+  </div>
+
+  <div class="hero-content container">
+    <div class="hero-tag" data-i18n="badge">🌏 打工度假簽證</div>
+    <h1 class="hero-title" data-i18n="title">WHV <span>澳洲</span></h1>
+    <p class="hero-sub" data-i18n="subtitle">你的打工度假完整工具 — 從出發到農場到自由</p>
+  </div>
+  <div class="hero-creator container" style="position:absolute;bottom:40px;right:48px;text-align:right;">
+    <div class="hero-name">Austin 🦘</div>
+    <div class="hero-handle">@jie_austin</div>
+  </div>
+</div>
+
+<!-- CONTAINER -->
+<div class="container">
+  <!-- NAV CARDS -->
+  <div class="nav-section">
+    <div class="nav-grid">
+      <a class="nav-card" href="#checklist">
+        <div class="nav-card-img">
+          <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=500&q=80&auto=format&fit=crop" alt="Pre-Departure" loading="lazy">
+          <div class="img-overlay"></div>
+          <div class="img-label" data-i18n="nav_img1">🧳 行前準備</div>
+        </div>
+        <div class="nav-label"><span data-i18n="nav_checklist">▶ 行前清單</span><span class="arr">›</span></div>
+      </a>
+      <a class="nav-card" href="#jobs">
+        <div class="nav-card-img">
+          <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=500&q=80&auto=format&fit=crop" alt="Job Search" loading="lazy">
+          <div class="img-overlay"></div>
+          <div class="img-label" data-i18n="nav_img2">💼 求職</div>
+        </div>
+        <div class="nav-label"><span data-i18n="nav_jobs">▶ 求職紀錄</span><span class="arr">›</span></div>
+      </a>
+      <a class="nav-card" href="#tracker">
+        <div class="nav-card-img">
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80&auto=format&fit=crop" alt="Farm Tracker" loading="lazy">
+          <div class="img-overlay"></div>
+          <div class="img-label" data-i18n="nav_img3">🌾 農場工</div>
+        </div>
+        <div class="nav-label"><span data-i18n="nav_farm">▶ 88天農場</span><span class="arr">›</span></div>
+      </a>
+      <a class="nav-card" href="#travel">
+        <div class="nav-card-img">
+          <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&q=80&auto=format&fit=crop" alt="Travel Plans" loading="lazy">
+          <div class="img-overlay"></div>
+          <div class="img-label" data-i18n="nav_img4">🗺️ 旅行計畫</div>
+        </div>
+        <div class="nav-label"><span data-i18n="nav_travel">▶ 旅行計畫</span><span class="arr">›</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="divider"><div class="divider-line"></div><div class="divider-label" data-i18n="journey_overview">旅程總覽</div><div class="divider-line"></div></div>
+  <div class="card" style="padding:20px 22px;">
+    <div class="ov-grid">
+      <div><div class="ov-label" data-i18n="ov_predep">行前準備</div><div class="pbar"><div class="pfill p-coral" id="ov-c" style="width:0%"></div></div><div class="ov-val" id="ov-cv">—</div></div>
+      <div><div class="ov-label" data-i18n="ov_farm">88天農場工</div><div class="pbar"><div class="pfill p-sage" id="ov-f" style="width:0%"></div></div><div class="ov-val" id="ov-fv">0 / 88</div></div>
+      <div><div class="ov-label" data-i18n="ov_budget">預算使用</div><div class="pbar"><div class="pfill p-gold" id="ov-b" style="width:0%"></div></div><div class="ov-val" id="ov-bv" data-i18n-id="set_budget">設定預算 →</div></div>
+      <div><div class="ov-label" data-i18n="ov_jobs">工作追蹤</div><div class="pbar"><div class="pfill p-navy" id="ov-j" style="width:0%"></div></div><div class="ov-val" id="ov-jv">0</div></div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- CHECKLIST -->
+    <div class="card" id="checklist">
+      <div class="card-header">
+        <div class="card-title" data-i18n="sec_checklist">🧳 行前準備清單</div>
+        <div style="display:flex;gap:7px;align-items:center;">
+          <div class="tag t-coral" id="cl-tag">— pending</div>
+          <button class="btn btn-primary btn-sm" onclick="openM('cl')" data-i18n="add_item">+ 新增項目</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="filter-row">
+          <button class="fbtn active" data-f="all" data-i18n="f_all">全部</button>
+          <button class="fbtn" data-f="todo" data-i18n="f_todo">待辦</button>
+          <button class="fbtn" data-f="done" data-i18n="f_done">已完成</button>
+        </div>
+        <div id="cl-list"></div>
+      </div>
+    </div>
+
+    <!-- FARM TRACKER -->
+    <div class="card" id="tracker">
+      <div class="card-header">
+        <div class="card-title" data-i18n="sec_farm">📋 二簽進度追蹤</div>
+        <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap;">
+          <div class="visa-tier-toggle">
+            <button class="vtbtn active" onclick="setVisaTier(88)" id="vt-88">二簽 88天</button>
+            <button class="vtbtn" onclick="setVisaTier(179)" id="vt-179">三簽 179天</button>
+          </div>
+          <div class="tag t-sage" id="farm-tag">0 / 88</div>
+          <button class="btn btn-primary btn-sm" onclick="openM('farm')" data-i18n="add_job_farm">+ 新增工作</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="stat-grid">
+          <div class="stat"><div class="snum" id="f-done" style="color:var(--sage)">0</div><div class="slbl" data-i18n="days_done">已完成天數</div></div>
+          <div class="stat"><div class="snum" id="f-left" style="color:var(--coral)">88</div><div class="slbl" data-i18n="days_left">剩餘天數</div></div>
+          <div class="stat"><div class="snum" id="f-pct" style="color:var(--gold)">0%</div><div class="slbl" data-i18n="progress">進度</div></div>
+        </div>
+        <div class="day-grid" id="day-grid"></div>
+        <div id="farm-list" style="margin-top:14px;"></div>
+      </div>
+    </div>
+
+    <!-- BUDGET -->
+    <div class="card" id="budget">
+      <div class="card-header">
+        <div class="card-title" data-i18n="sec_budget">💳 預算與支出</div>
+        <div style="display:flex;gap:7px;align-items:center;">
+          <div class="tag t-gold" id="bud-tag">A$0</div>
+          <button class="btn btn-primary btn-sm" onclick="openM('expense')" data-i18n="add_expense">+ 新增支出</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="bud-top">
+          <div class="bud-box tot">
+            <div class="bamt" id="b-total">A$0</div>
+            <div class="blbl" data-i18n="lbl_total_budget">總預算</div>
+            <button class="bedit-btn" onclick="openM('bedit')" data-i18n="edit_budget">✏ 編輯預算</button>
+          </div>
+          <div class="bud-box spe">
+            <div class="bamt" id="b-spent">A$0</div>
+            <div class="blbl" data-i18n="lbl_spent">已花費</div>
+          </div>
+        </div>
+        <div class="pbar" style="height:9px;"><div class="pfill p-coral" id="b-bar" style="width:0%"></div></div>
+        <div id="exp-list" style="margin-top:12px;"></div>
+      </div>
+    </div>
+
+    <!-- JOB LOG -->
+    <div class="card" id="jobs">
+      <div class="card-header">
+        <div class="card-title" data-i18n="sec_jobs">💼 工作與住宿紀錄</div>
+        <div style="display:flex;gap:7px;align-items:center;">
+          <div class="tag t-navy" id="job-tag">0</div>
+          <button class="btn btn-primary btn-sm" onclick="openM('job')" data-i18n="add_job">+ 新增申請</button>
+        </div>
+      </div>
+      <div class="card-body"><div id="job-list"></div></div>
+    </div>
+
+    <!-- TRAVEL -->
+    <div class="card fw" id="travel">
+      <div class="card-header">
+        <div class="card-title" data-i18n="sec_travel">🗺️ 旅行計畫</div>
+        <button class="btn btn-primary btn-sm" onclick="openM('travel')" data-i18n="add_dest">+ 新增目的地</button>
+      </div>
+      <div class="card-body">
+        <div id="travel-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;"></div>
+      </div>
+    </div>
+
+    <!-- RESOURCES -->
+    <div class="card fw">
+      <div class="card-header">
+        <div class="card-title" data-i18n="sec_resources">🔗 實用資源</div>
+        <div class="tag t-gold">12 links</div>
+      </div>
+      <div class="card-body">
+        <div class="res-cat" data-i18n="res_work">💼 找工作</div>
+        <div class="res-grid">
+          <a class="res-card" href="https://www.seek.com.au" target="_blank" rel="noopener"><div class="res-ico">🌐</div><div><div class="res-name">Seek.com.au</div><div class="res-sub" data-i18n="seek_sub">澳洲最大求職平台</div></div><div class="res-arr">↗</div></a>
+          <a class="res-card" href="https://www.backpackerjobboard.com.au" target="_blank" rel="noopener"><div class="res-ico">🎒</div><div><div class="res-name">Backpacker Job Board</div><div class="res-sub" data-i18n="bjb_sub">WHV & 88天農場工首選</div></div><div class="res-arr">↗</div></a>
+          <a class="res-card" href="https://www.taw.com.au" target="_blank" rel="noopener"><div class="res-ico">🌏</div><div><div class="res-name">Travellers at Work</div><div class="res-sub" data-i18n="taw_sub">農場、餐飲、各類打工</div></div><div class="res-arr">↗</div></a>
+        </div>
+        <div class="res-cat" data-i18n="res_accom">🏠 住宿</div>
+        <div class="res-grid">
+          <a class="res-card" href="https://flatmates.com.au" target="_blank" rel="noopener"><div class="res-ico">🏡</div><div><div class="res-name">Flatmates.com.au</div><div class="res-sub" data-i18n="flatmates_sub">找Share House必備平台</div></div><div class="res-arr">↗</div></a>
+          <a class="res-card" href="https://www.gumtree.com.au/s-flatshare-rooms/c18666" target="_blank" rel="noopener"><div class="res-ico">🛋️</div><div><div class="res-name">Gumtree 分租</div><div class="res-sub" data-i18n="gumtree_sub">澳洲最大分租廣告平台</div></div><div class="res-arr">↗</div></a>
+          <a class="res-card" href="https://www.helpx.net" target="_blank" rel="noopener"><div class="res-ico">🤝</div><div><div class="res-name">HelpX</div><div class="res-sub" data-i18n="helpx_sub">換工免費住宿</div></div><div class="res-arr">↗</div></a>
+        </div>
+        <div class="res-cat" data-i18n="res_money">💳 金錢與簽證</div>
+        <div class="res-grid">
+          <a class="res-card" href="https://wise.com" target="_blank" rel="noopener"><div class="res-ico">💸</div><div><div class="res-name">Wise</div><div class="res-sub" data-i18n="wise_sub">最佳國際匯率</div></div><div class="res-arr">↗</div></a>
+          <a class="res-card" href="https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/work-holiday-417" target="_blank" rel="noopener"><div class="res-ico">📋</div><div><div class="res-name">WHV 417 Portal</div><div class="res-sub" data-i18n="visa_sub">簽證申請與查詢</div></div><div class="res-arr">↗</div></a>
+          <a class="res-card" href="https://www.ato.gov.au/individuals-and-families/tax-file-number" target="_blank" rel="noopener"><div class="res-ico">🔢</div><div><div class="res-name">申請 TFN (ATO)</div><div class="res-sub" data-i18n="tfn_sub">稅號申請（必備）</div></div><div class="res-arr">↗</div></a>
+        </div>
+        <div class="res-cat" data-i18n="res_transport">🚌 交通</div>
+        <div class="res-grid">
+          <a class="res-card" href="https://www.greyhound.com.au" target="_blank" rel="noopener"><div class="res-ico">🚌</div><div><div class="res-name">Greyhound AU</div><div class="res-sub" data-i18n="greyhound_sub">城際巴士通行證</div></div><div class="res-arr">↗</div></a>
+          <a class="res-card" href="https://www.rome2rio.com" target="_blank" rel="noopener"><div class="res-ico">🗺️</div><div><div class="res-name">Rome2Rio</div><div class="res-sub" data-i18n="rome2rio_sub">比較所有交通方式</div></div><div class="res-arr">↗</div></a>
+          <a class="res-card" href="https://www.gumtree.com.au/s-cars-vans-utes/c18320" target="_blank" rel="noopener"><div class="res-ico">🚐</div><div><div class="res-name">Buy a Van</div><div class="res-sub" data-i18n="van_sub">買車廂車/露營車</div></div><div class="res-arr">↗</div></a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main-grid -->
+</div><!-- /container -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="fbrand">WHV <span>Australia</span> Hub</div>
+      <div class="ftag" data-i18n="footer_tag">你的打工度假完整工具包 — 從出發到自由</div>
+      <div class="fver">v3.0 · 2025</div>
+    </div>
+    <div class="footer-socials">
+      <div class="footer-socials-label">Follow the journey</div>
+      <div class="social-links">
+        <a class="social-btn" href="https://linktr.ee/austin_is_thinking" target="_blank" rel="noopener">
+          <span class="si">🌿</span> Linktree
+        </a>
+        <a class="social-btn" href="https://www.instagram.com/jie_austin/" target="_blank" rel="noopener">
+          <span class="si">📸</span> Instagram
+        </a>
+        <a class="social-btn" href="https://www.youtube.com/@austin_inmelbourne" target="_blank" rel="noopener">
+          <span class="si">▶️</span> YouTube
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-divider" style="max-width:1200px;margin:20px auto 16px;"></div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Austin · WHV Australia Hub</div>
+    <div class="footer-made">Made with ❤️ for WHV travelers</div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════ MODALS ══════════ -->
+<!-- CHECKLIST ITEM -->
+<div class="overlay" id="m-cl">
+  <div class="modal">
+    <div class="mhead"><div class="mtitle" id="cl-mtitle">✅ 新增清單項目</div><button class="mclose" onclick="closeM('cl')">✕</button></div>
+    <div class="mbody">
+      <input type="hidden" id="cl-eid">
+      <div class="fg"><label class="flbl" data-i18n="form_task_desc">任務描述 *</label><input class="finput" id="cl-text" placeholder="e.g. 購買旅遊保險"></div>
+      <div class="frow">
+        <div class="fg"><label class="flbl" data-i18n="form_priority">優先度</label>
+          <select class="fsel" id="cl-prio">
+            <option value="high">🔴 High</option>
+            <option value="med">🟡 Medium</option>
+            <option value="low">🟢 Low</option>
+          </select>
+        </div>
+        <div class="fg"><label class="flbl" data-i18n="form_timing">時間點</label><input class="finput" id="cl-date" placeholder="e.g. 出發前"></div>
+      </div>
+      <div class="faction">
+        <button class="btn btn-ghost" onclick="closeM('cl')" data-i18n="cancel">取消</button>
+        <button class="btn btn-primary" onclick="saveCL()" data-i18n="save">💾 儲存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FARM -->
+<div class="overlay" id="m-farm">
+  <div class="modal">
+    <div class="mhead"><div class="mtitle" id="farm-mtitle">🌾 新增農場工</div><button class="mclose" onclick="closeM('farm')">✕</button></div>
+    <div class="mbody">
+      <input type="hidden" id="farm-eid">
+      <div class="fg"><label id="lbl-farm-emp" class="flbl">雇主 / 農場名稱 *</label><input class="finput" id="farm-emp" placeholder="e.g. Queensland Berry Farm"></div>
+      <div class="frow">
+        <div class="fg"><label id="lbl-farm-loc" class="flbl">地點</label><input class="finput" id="farm-loc" placeholder="e.g. Stanthorpe, QLD"></div>
+        <div class="fg"><label id="lbl-farm-rate" class="flbl">時薪 (A$)</label><input class="finput" id="farm-rate" type="number" placeholder="26.50"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label id="lbl-farm-start" class="flbl">開始日期 *</label><input class="finput" id="farm-s" type="date"></div>
+        <div class="fg"><label id="lbl-farm-end" class="flbl">結束日期</label><input class="finput" id="farm-e" type="date"><div id="farm-end-hint" class="fhint">仍在工作中可留空</div></div>
+      </div>
+      <div class="fg"><label id="lbl-farm-type" class="flbl">工作類型</label>
+        <select class="fsel" id="farm-type">
+          <option value="fruit">🍓 採水果</option>
+          <option value="harvest">🌾 收割</option>
+          <option value="farmhand">🐄 農場幫工</option>
+          <option value="fishing">🐟 漁業</option>
+          <option value="construction">🔨 建築</option>
+          <option value="other">⚙️ 其他</option>
+        </select>
+      </div>
+      <div class="fg"><label id="lbl-farm-notes" class="flbl">備註</label><textarea class="fta" id="farm-notes" placeholder="住宿狀況、聯絡方式、工作條件..."></textarea></div>
+      <div class="faction">
+        <button class="btn btn-ghost" onclick="closeM('farm')">取消</button>
+        <button class="btn btn-sage" onclick="saveFarm()">💾 儲存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BUDGET EDIT -->
+<div class="overlay" id="m-bedit">
+  <div class="modal">
+    <div class="mhead"><div class="mtitle">💳 設定總預算</div><button class="mclose" onclick="closeM('bedit')">✕</button></div>
+    <div class="mbody">
+      <div class="fg"><label id="lbl-bedit-total" class="flbl">總預算 (A$) *</label><input class="finput" id="b-input" type="number" placeholder="e.g. 10000"><div id="budget-hint" class="fhint">整趟旅程的預計總花費</div></div>
+      <div class="faction">
+        <button class="btn btn-ghost" onclick="closeM('bedit')">取消</button>
+        <button class="btn btn-primary" onclick="saveBud()">💾 儲存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPENSE -->
+<div class="overlay" id="m-expense">
+  <div class="modal">
+    <div class="mhead"><div class="mtitle" id="exp-mtitle">💳 新增支出</div><button class="mclose" onclick="closeM('expense')">✕</button></div>
+    <div class="mbody">
+      <input type="hidden" id="exp-eid">
+      <div class="frow">
+        <div class="fg"><label id="lbl-exp-cat" class="flbl">類別 *</label>
+          <select class="fsel" id="exp-cat">
+            <option value="accommodation">🏠 住宿</option>
+            <option value="food">🍜 餐飲</option>
+            <option value="transport">🚌 交通</option>
+            <option value="visa">✈️ 簽證/機票</option>
+            <option value="insurance">🏥 保險</option>
+            <option value="activities">🎯 活動</option>
+            <option value="equipment">🎒 裝備</option>
+            <option value="other">📦 其他</option>
+          </select>
+        </div>
+        <div class="fg"><label id="lbl-exp-amt" class="flbl">金額 (A$) *</label><input class="finput" id="exp-amt" type="number" placeholder="0.00"></div>
+      </div>
+      <div class="fg"><label id="lbl-exp-name" class="flbl">說明 *</label><input class="finput" id="exp-name" placeholder="e.g. Base Camp Hostel, Brisbane"></div>
+      <div class="frow">
+        <div class="fg"><label id="lbl-exp-date" class="flbl">日期</label><input class="finput" id="exp-date" type="date"></div>
+        <div class="fg"><label id="lbl-exp-note" class="flbl">備註</label><input class="finput" id="exp-note" placeholder="選填"></div>
+      </div>
+      <div class="faction">
+        <button class="btn btn-ghost" onclick="closeM('expense')">取消</button>
+        <button class="btn btn-primary" onclick="saveExp()">💾 儲存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JOB -->
+<div class="overlay" id="m-job">
+  <div class="modal">
+    <div class="mhead"><div class="mtitle" id="job-mtitle">💼 新增求職記錄</div><button class="mclose" onclick="closeM('job')">✕</button></div>
+    <div class="mbody">
+      <input type="hidden" id="job-eid">
+      <div class="fg"><label id="lbl-job-co" class="flbl">公司 / 農場名稱 *</label><input class="finput" id="job-co" placeholder="e.g. Queensland Berry Farm"></div>
+      <div class="frow">
+        <div class="fg"><label id="lbl-job-loc" class="flbl">地點</label><input class="finput" id="job-loc" placeholder="e.g. Brisbane, QLD"></div>
+        <div class="fg"><label id="lbl-job-status" class="flbl">狀態 *</label>
+          <select class="fsel" id="job-status">
+            <option value="applied">已申請</option>
+            <option value="interview">面試</option>
+            <option value="offer">收到邀約</option>
+            <option value="working">工作中</option>
+            <option value="rejected">未錄取</option>
+          </select>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label id="lbl-job-type" class="flbl">工作類型</label>
+          <select class="fsel" id="job-type">
+            <option value="farm">🌾 農場工</option>
+            <option value="hospitality">🍽️ 餐飲</option>
+            <option value="construction">🔨 建築</option>
+            <option value="retail">🛍️ 零售</option>
+            <option value="cleaning">🧹 清潔</option>
+            <option value="other">⚙️ 其他</option>
+          </select>
+        </div>
+        <div class="fg"><label id="lbl-job-pay" class="flbl">時薪 (A$)</label><input class="finput" id="job-pay" type="number" placeholder="25.50"></div>
+      </div>
+      <div class="fg"><label id="lbl-job-contact" class="flbl">聯絡人 / Email</label><input class="finput" id="job-contact" placeholder="manager@farm.com.au"></div>
+      <div class="fg"><label id="lbl-job-date" class="flbl">申請日期</label><input class="finput" id="job-date" type="date"></div>
+      <div class="fg"><label id="lbl-job-notes" class="flbl">備註</label><textarea class="fta" id="job-notes" placeholder="如何找到這份工作、面試技巧..."></textarea></div>
+      <div class="faction">
+        <button class="btn btn-ghost" onclick="closeM('job')">取消</button>
+        <button class="btn btn-primary" onclick="saveJob()">💾 儲存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRAVEL -->
+<div class="overlay" id="m-travel">
+  <div class="modal">
+    <div class="mhead"><div class="mtitle" id="travel-mtitle">🗺️ 新增目的地</div><button class="mclose" onclick="closeM('travel')">✕</button></div>
+    <div class="mbody">
+      <input type="hidden" id="tr-eid">
+      <div class="frow">
+        <div class="fg"><label id="lbl-tr-state" class="flbl">州/領地 *</label>
+          <select class="fsel" id="tr-state">
+            <option value="NSW">🌉 New South Wales</option>
+            <option value="QLD">☀️ Queensland</option>
+            <option value="VIC">☕ Victoria</option>
+            <option value="WA">🌅 Western Australia</option>
+            <option value="SA">🍷 South Australia</option>
+            <option value="TAS">🏔️ Tasmania</option>
+            <option value="NT">🦘 Northern Territory</option>
+            <option value="ACT">🏛️ ACT / Canberra</option>
+          </select>
+        </div>
+        <div class="fg"><label id="lbl-tr-dstatus" class="flbl">狀態</label>
+          <select class="fsel" id="tr-status">
+            <option value="planned">📅 計劃中</option>
+            <option value="current">📍 目前在這</option>
+            <option value="visited">✅ 已去過</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label id="lbl-tr-city" class="flbl">城市 / 景點 *</label><input class="finput" id="tr-city" placeholder="e.g. Byron Bay, Great Ocean Road"></div>
+      <div class="frow">
+        <div class="fg"><label id="lbl-tr-arr" class="flbl">抵達日期</label><input class="finput" id="tr-arr" type="date"></div>
+        <div class="fg"><label id="lbl-tr-dep" class="flbl">離開日期</label><input class="finput" id="tr-dep" type="date"></div>
+      </div>
+      <div class="fg"><label id="lbl-tr-notes" class="flbl">待辦 / 備註</label><textarea class="fta" id="tr-notes" placeholder="景點、住宿、小提示..."></textarea></div>
+      <div class="faction">
+        <button class="btn btn-ghost" onclick="closeM('travel')">取消</button>
+        <button class="btn btn-primary" onclick="saveTravel()">💾 儲存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// TRANSLATIONS
+// ══════════════════════════════════════════
+const LANGS = {
+  tw: {
+    badge:'🌏 打工度假簽證', title:'WHV 澳洲旅程攻略', subtitle:'你的打工度假完整工具 — 從出發到指定工作到自由',
+    nav_img1:'🧳 行前準備', nav_img2:'💼 求職', nav_img3:'📋 二簽進度', nav_img4:'🗺️ 旅行計畫',
+    nav_checklist:'▶ 行前清單', nav_jobs:'▶ 求職紀錄', nav_farm:'▶ 二簽進度', nav_travel:'▶ 旅行計畫',
+    journey_overview:'旅程總覽', ov_predep:'行前準備', ov_farm:'二簽進度', ov_budget:'預算使用', ov_jobs:'工作追蹤',
+    sec_checklist:'🧳 行前準備清單', sec_farm:'📋 二簽進度追蹤', sec_budget:'💳 預算與支出',
+    sec_jobs:'💼 工作與住宿紀錄', sec_travel:'🗺️ 旅行計畫', sec_resources:'🔗 實用資源',
+    add_item:'+ 新增項目', add_job_farm:'+ 新增工作', add_expense:'+ 新增支出', add_job:'+ 新增申請', add_dest:'+ 新增目的地',
+    f_all:'全部', f_todo:'待辦', f_done:'已完成',
+    days_done:'已完成天數', days_left:'剩餘天數', progress:'進度',
+    lbl_total_budget:'總預算', lbl_spent:'已花費', edit_budget:'✏ 編輯預算',
+    set_budget:'設定預算 →',
+    res_work:'💼 找工作', res_accom:'🏠 住宿', res_money:'💳 金錢與簽證', res_transport:'🚌 交通',
+    seek_sub:'澳洲最大求職平台', bjb_sub:'WHV & 二簽指定工作首選', taw_sub:'農場、餐飲、各類打工',
+    flatmates_sub:'找Share House必備平台', gumtree_sub:'澳洲最大分租廣告平台', helpx_sub:'換工免費住宿',
+    wise_sub:'最佳國際匯率', visa_sub:'簽證申請與查詢', tfn_sub:'稅號申請（必備）',
+    greyhound_sub:'城際巴士通行證', rome2rio_sub:'比較所有交通方式', van_sub:'買車廂車/露營車',
+    footer_tag:'你的打工度假完整工具包 — 從出發到自由',
+    footer_follow:'追蹤旅程', footer_made:'用 ❤️ 為打工旅人製作',
+    cancel:'取消', save:'💾 儲存',
+    // Modal titles
+    mtitle_cl_add:'✅ 新增清單項目', mtitle_cl_edit:'✅ 編輯項目',
+    mtitle_farm_add:'📋 新增指定工作', mtitle_farm_edit:'📋 編輯工作紀錄',
+    mtitle_bedit:'💳 設定總預算',
+    mtitle_exp_add:'💳 新增支出', mtitle_exp_edit:'💳 編輯支出',
+    mtitle_job_add:'💼 新增求職記錄', mtitle_job_edit:'💼 編輯申請',
+    mtitle_travel_add:'🗺️ 新增目的地', mtitle_travel_edit:'🗺️ 編輯目的地',
+    // Form labels
+    form_task_desc:'任務描述 *', form_priority:'優先度', form_timing:'時間點',
+    form_employer:'雇主 / 農場名稱 *', form_location:'地點', form_hourly:'時薪 (A$)',
+    form_start:'開始日期 *', form_end:'結束日期', form_end_hint:'仍在工作中可留空',
+    form_work_type:'工作類型', form_notes:'備註',
+    form_total_budget:'總預算 (A$) *', form_budget_hint:'整趟旅程的預計總花費',
+    form_category:'類別 *', form_amount:'金額 (A$) *', form_desc:'說明 *',
+    form_date:'日期', form_note_opt:'備註（選填）',
+    form_company:'公司 / 農場名稱 *', form_status:'狀態 *', form_job_type:'工作類型',
+    form_pay:'時薪 (A$)', form_contact:'聯絡人 / Email', form_applied_date:'申請日期',
+    form_state:'州/領地 *', form_dest_status:'狀態',
+    form_city:'城市 / 景點 *', form_arrive:'抵達日期', form_depart:'離開日期',
+    form_todo_notes:'待辦 / 備註',
+    // Placeholders
+    ph_task:'e.g. 購買旅遊保險', ph_timing:'e.g. 出發前',
+    ph_employer:'e.g. Queensland Berry Farm', ph_loc_farm:'e.g. Stanthorpe, QLD',
+    ph_rate:'26.50', ph_budget:'e.g. 10000',
+    ph_exp_desc:'e.g. Base Camp Hostel, Brisbane', ph_exp_note:'選填',
+    ph_company:'e.g. Queensland Berry Farm', ph_job_loc:'e.g. Brisbane, QLD',
+    ph_contact:'manager@farm.com.au',
+    ph_city:'e.g. Byron Bay, Great Ocean Road',
+    ph_farm_notes:'住宿狀況、聯絡方式、工作條件...', ph_job_notes:'如何找到這份工作、面試技巧...',
+    ph_travel_notes:'景點、住宿、小提示...',
+    // Select options — farm type
+    opt_fruit:'🍓 採水果', opt_harvest:'🌾 收割', opt_farmhand:'🐄 農場幫工',
+    opt_fishing:'🐟 漁業', opt_construction:'🔨 建築', opt_other:'⚙️ 其他',
+    // Select options — expense cat
+    opt_accommodation:'🏠 住宿', opt_food:'🍜 餐飲', opt_transport:'🚌 交通',
+    opt_visa:'✈️ 簽證/機票', opt_insurance:'🏥 保險', opt_activities:'🎯 活動',
+    opt_equipment:'🎒 裝備', opt_other_cat:'📦 其他',
+    // Select options — job status
+    opt_applied:'已申請', opt_interview:'面試', opt_offer:'收到邀約',
+    opt_working:'工作中', opt_rejected:'未錄取',
+    // Select options — job type
+    opt_farm:'🌾 農場工', opt_hospitality:'🍽️ 餐飲', opt_retail:'🛍️ 零售',
+    opt_cleaning:'🧹 清潔',
+    // Select options — travel status
+    opt_planned:'📅 計劃中', opt_current:'📍 目前在這', opt_visited:'✅ 已去過',
+    // Alerts
+    alert_task:'請填寫任務描述', alert_employer:'請填寫農場名稱', alert_start:'請填寫開始日期',
+    alert_budget:'請填寫有效金額', alert_exp_desc:'請填寫說明', alert_exp_amt:'請填寫有效金額',
+    alert_company:'請填寫公司名稱', alert_city:'請填寫城市名稱',
+    alert_delete:'確定刪除？',
+    // Toast
+    toast_updated:'✅ 已更新！', toast_added:'✅ 已新增！', toast_deleted:'🗑️ 已刪除',
+    toast_budget:'✅ 預算已設定！',
+    // Render strings
+    form_priority_h:'High', form_priority_m:'Med', form_priority_l:'Low',
+    all_done:'✅ 全部完成！', pending_sfx:'項待辦',
+    empty_farm:'尚無指定工作紀錄 — 新增第一筆！', empty_exp:'尚無支出紀錄 — 新增第一筆！',
+    empty_job:'尚無申請紀錄 — 開始追蹤！', empty_travel:'尚無目的地 — 開始規劃！',
+    present:'至今',
+    cl:[
+      {t:'申請打工度假簽證（417類）',p:'high',d:'越早越好'},
+      {t:'申請國際駕照',p:'high',d:'出發前'},
+      {t:'護照有效期確認18個月以上',p:'high',d:'出發前'},
+      {t:'購買旅遊保險（OSHC或私人保險）',p:'high',d:'出發前'},
+      {t:'訂購單程機票至澳洲',p:'high',d:'簽證核准後'},
+      {t:'開設國際銀行帳戶（Wise / ANZ）',p:'med',d:'出發前'},
+      {t:'抵達後申請稅號TFN',p:'med',d:'抵達第一週'},
+      {t:'辦理澳洲門號（Telstra / Optus）',p:'med',d:'抵達時'},
+      {t:'申請MyGov帳號（稅務/醫療）',p:'med',d:'抵達第一週'},
+      {t:'加入WHV Facebook社群和論壇',p:'low',d:'任何時候'},
+      {t:'研究指定工作地區和採收季節',p:'low',d:'出發前'},
+    ]
+  },
+  en: {
+    badge:'🌏 Working Holiday Visa', title:'WHV Australia Hub', subtitle:'Your complete journey hub — from takeoff to specified work to freedom',
+    nav_img1:'🧳 Pre-Departure', nav_img2:'💼 Job Search', nav_img3:'📋 2nd Visa', nav_img4:'🗺️ Travel Plans',
+    nav_checklist:'▶ Checklist', nav_jobs:'▶ Job Log', nav_farm:'▶ 2nd Visa Progress', nav_travel:'▶ Itinerary',
+    journey_overview:'Journey Overview', ov_predep:'Pre-Departure', ov_farm:'2nd Visa Progress', ov_budget:'Budget Used', ov_jobs:'Jobs Tracked',
+    sec_checklist:'🧳 Pre-Departure Checklist', sec_farm:'📋 2nd Visa Progress', sec_budget:'💳 Budget & Expenses',
+    sec_jobs:'💼 Job & Accommodation Log', sec_travel:'🗺️ Travel Plans', sec_resources:'🔗 Useful Resources',
+    add_item:'+ Add Item', add_job_farm:'+ Add Work', add_expense:'+ Expense', add_job:'+ Add Job', add_dest:'+ Add Destination',
+    f_all:'All', f_todo:'To-do', f_done:'Done',
+    days_done:'Days Done', days_left:'Days Left', progress:'Progress',
+    lbl_total_budget:'Total Budget', lbl_spent:'Spent so far', edit_budget:'✏ Edit budget',
+    set_budget:'Set budget →',
+    res_work:'💼 Find Work', res_accom:'🏠 Accommodation', res_money:'💳 Money & Visa', res_transport:'🚌 Getting Around',
+    seek_sub:"Australia's #1 job board", bjb_sub:'Best for WHV specified work', taw_sub:'Farm, hospitality & more',
+    flatmates_sub:'Find share houses', gumtree_sub:'Flatshare listings AU', helpx_sub:'Work exchange for free stay',
+    wise_sub:'Best international rates', visa_sub:'Apply & check visa status', tfn_sub:'Tax File Number required',
+    greyhound_sub:'Intercity coach passes', rome2rio_sub:'Compare all transport', van_sub:'Cars & campervans for sale',
+    footer_tag:'Your complete Working Holiday toolkit — from takeoff to freedom',
+    footer_follow:'Follow the journey', footer_made:'Made with ❤️ for WHV travelers',
+    cancel:'Cancel', save:'💾 Save',
+    // Modal titles
+    mtitle_cl_add:'✅ Add Checklist Item', mtitle_cl_edit:'✅ Edit Item',
+    mtitle_farm_add:'📋 Add Specified Work', mtitle_farm_edit:'📋 Edit Work Entry',
+    mtitle_bedit:'💳 Set Total Budget',
+    mtitle_exp_add:'💳 Add Expense', mtitle_exp_edit:'💳 Edit Expense',
+    mtitle_job_add:'💼 Add Job Application', mtitle_job_edit:'💼 Edit Application',
+    mtitle_travel_add:'🗺️ Add Destination', mtitle_travel_edit:'🗺️ Edit Destination',
+    // Form labels
+    form_task_desc:'Task Description *', form_priority:'Priority', form_timing:'Timing',
+    form_employer:'Employer / Farm Name *', form_location:'Location', form_hourly:'Hourly Rate (A$)',
+    form_start:'Start Date *', form_end:'End Date', form_end_hint:'Leave blank if still working',
+    form_work_type:'Work Type', form_notes:'Notes',
+    form_total_budget:'Total Budget (A$) *', form_budget_hint:'Your total planned spend for the trip',
+    form_category:'Category *', form_amount:'Amount (A$) *', form_desc:'Description *',
+    form_date:'Date', form_note_opt:'Note (optional)',
+    form_company:'Company / Farm Name *', form_status:'Status *', form_job_type:'Job Type',
+    form_pay:'Pay Rate (A$/hr)', form_contact:'Contact / Email', form_applied_date:'Applied Date',
+    form_state:'State / Territory *', form_dest_status:'Status',
+    form_city:'City / Place *', form_arrive:'Arrival Date', form_depart:'Departure Date',
+    form_todo_notes:'Things to Do / Notes',
+    // Placeholders
+    ph_task:'e.g. Book travel insurance', ph_timing:'e.g. Before departure',
+    ph_employer:'e.g. Queensland Berry Farm', ph_loc_farm:'e.g. Stanthorpe, QLD',
+    ph_rate:'26.50', ph_budget:'e.g. 10000',
+    ph_exp_desc:'e.g. Base Camp Hostel, Brisbane', ph_exp_note:'Optional',
+    ph_company:'e.g. Queensland Berry Farm', ph_job_loc:'e.g. Brisbane, QLD',
+    ph_contact:'manager@farm.com.au',
+    ph_city:'e.g. Byron Bay, Great Ocean Road',
+    ph_farm_notes:'Accommodation, contact info, conditions...', ph_job_notes:'How you found this, interview tips...',
+    ph_travel_notes:'Attractions, accommodation, tips...',
+    // Select options — farm type
+    opt_fruit:'🍓 Fruit Picking', opt_harvest:'🌾 Harvest / Cropping', opt_farmhand:'🐄 Farm Hand / Station',
+    opt_fishing:'🐟 Fishing / Aquaculture', opt_construction:'🔨 Construction / Labouring', opt_other:'⚙️ Other Regional Work',
+    // Select options — expense cat
+    opt_accommodation:'🏠 Accommodation', opt_food:'🍜 Food & Groceries', opt_transport:'🚌 Transport',
+    opt_visa:'✈️ Visa & Flights', opt_insurance:'🏥 Insurance', opt_activities:'🎯 Activities',
+    opt_equipment:'🎒 Gear & Equipment', opt_other_cat:'📦 Other',
+    // Select options — job status
+    opt_applied:'Applied', opt_interview:'Interview', opt_offer:'Offer Received',
+    opt_working:'Currently Working', opt_rejected:'Rejected',
+    // Select options — job type
+    opt_farm:'🌾 Farm Work', opt_hospitality:'🍽️ Hospitality', opt_retail:'🛍️ Retail',
+    opt_cleaning:'🧹 Cleaning',
+    // Select options — travel status
+    opt_planned:'📅 Planned', opt_current:'📍 Currently Here', opt_visited:'✅ Visited',
+    // Alerts
+    alert_task:'Please enter a task description', alert_employer:'Please enter employer name',
+    alert_start:'Please enter a start date', alert_budget:'Please enter a valid amount',
+    alert_exp_desc:'Please enter a description', alert_exp_amt:'Please enter a valid amount',
+    alert_company:'Please enter company name', alert_city:'Please enter city/place name',
+    alert_delete:'Delete this entry?',
+    // Toast
+    toast_updated:'✅ Updated!', toast_added:'✅ Added!', toast_deleted:'🗑️ Deleted',
+    toast_budget:'✅ Budget saved!',
+    // Render strings
+    form_priority_h:'High', form_priority_m:'Med', form_priority_l:'Low',
+    all_done:'✅ All done!', pending_sfx:' pending',
+    empty_farm:'No work entries yet — add your first!', empty_exp:'No expenses yet — add your first!',
+    empty_job:'No applications yet — start tracking!', empty_travel:'No destinations yet — start planning!',
+    present:'Present',
+    cl:[
+      {t:'Submit Working Holiday Visa (417) Application',p:'high',d:'ASAP'},
+      {t:"Get International Driver's Permit",p:'high',d:'Before departure'},
+      {t:'Update / renew passport (valid 18+ months)',p:'high',d:'Before departure'},
+      {t:'Get travel insurance (OSHC or private)',p:'high',d:'Before departure'},
+      {t:'Book one-way flight to Australia',p:'high',d:'When visa approved'},
+      {t:'Open international bank account (Wise / ANZ)',p:'med',d:'Before departure'},
+      {t:'Apply for Tax File Number (TFN) after arrival',p:'med',d:'First week in AU'},
+      {t:'Get an Australian SIM card (Telstra / Optus)',p:'med',d:'On arrival'},
+      {t:'Set up MyGov account (for tax / Medicare)',p:'med',d:'First week in AU'},
+      {t:'Join WHV Facebook groups and forums',p:'low',d:'Anytime'},
+      {t:'Research specified work regions and seasons',p:'low',d:'Before departure'},
+    ]
+  }
+};
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+const K = { farm:'whv3_farm', exp:'whv3_exp', job:'whv3_job', travel:'whv3_travel', bud:'whv3_bud', checks:'whv3_checks', cl_items:'whv3_cl_items', lang:'whv3_lang', dark:'whv3_dark', tier:'whv3_tier' };
+const ld  = k => { try { return JSON.parse(localStorage.getItem(k)) || []; } catch { return []; } };
+const ldO = (k,d) => { try { return JSON.parse(localStorage.getItem(k)) || d; } catch { return d; } };
+const sv  = (k,v) => localStorage.setItem(k, JSON.stringify(v));
+
+let farms = ld(K.farm), exps = ld(K.exp), jobs = ld(K.job), travels = ld(K.travel);
+let bud = ldO(K.bud, {total:0}), checks = ldO(K.checks, {});
+let clCustom = ld(K.cl_items); if(!Array.isArray(clCustom)) clCustom=[];
+let currentLang = ldO(K.lang,'') || 'tw';
+let isDark = ldO(K.dark, false);
+let visaTier = ldO(K.tier, 88);
+
+// ══════════════════════════════════════════
+// LANGUAGE
+// ══════════════════════════════════════════
+function t(key){ return LANGS[currentLang][key] || LANGS['en'][key] || key; }
+
+function setLang(lang) {
+  currentLang = lang; sv(K.lang, lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.trim() === {tw:'繁中',en:'EN'}[lang]));
+  applyLang();
+  renderCL(); renderFarm(); renderBud(); renderJobs(); renderTravel(); renderOV();
+}
+
+function applyLang() {
+  // data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    const val = t(key);
+    if(!val) return;
+    if(key === 'title') {
+      el.innerHTML = currentLang === 'en' ? 'WHV <span>Australia</span> Hub' : 'WHV <span>澳洲</span>';
+    } else {
+      el.textContent = val;
+    }
+  });
+
+  // Footer social label + made-with
+  const fsl = document.querySelector('.footer-socials-label');
+  if(fsl) fsl.textContent = t('footer_follow');
+  const fmade = document.querySelector('.footer-made');
+  if(fmade) fmade.textContent = t('footer_made');
+
+  // Placeholders
+  const ph = (id, key) => { const el=v(id); if(el) el.placeholder=t(key); };
+  ph('cl-text','ph_task'); ph('cl-date','ph_timing');
+  ph('farm-emp','ph_employer'); ph('farm-loc','ph_loc_farm'); ph('farm-rate','ph_rate');
+  ph('farm-notes','ph_farm_notes');
+  ph('b-input','ph_budget');
+  ph('exp-name','ph_exp_desc'); ph('exp-note','ph_exp_note');
+  ph('job-co','ph_company'); ph('job-loc','ph_job_loc'); ph('job-contact','ph_contact');
+  ph('job-notes','ph_job_notes');
+  ph('tr-city','ph_city'); ph('tr-notes','ph_travel_notes');
+
+  // Form hints
+  const hint = (id, key) => { const el=v(id); if(el) el.textContent=t(key); };
+  hint('farm-end-hint','form_end_hint');
+  hint('budget-hint','form_budget_hint');
+
+  // Select options
+  const setOpts = (selId, opts) => {
+    const sel = v(selId); if(!sel) return;
+    sel.querySelectorAll('option').forEach((opt, i) => { if(opts[i]) opt.textContent = t(opts[i]); });
+  };
+  setOpts('cl-prio', ['form_priority_h','form_priority_m','form_priority_l']);
+  setOpts('farm-type', ['opt_fruit','opt_harvest','opt_farmhand','opt_fishing','opt_construction','opt_other']);
+  setOpts('exp-cat', ['opt_accommodation','opt_food','opt_transport','opt_visa','opt_insurance','opt_activities','opt_equipment','opt_other_cat']);
+  setOpts('job-status', ['opt_applied','opt_interview','opt_offer','opt_working','opt_rejected']);
+  setOpts('job-type', ['opt_farm','opt_hospitality','opt_construction','opt_retail','opt_cleaning','opt_other']);
+  setOpts('tr-status', ['opt_planned','opt_current','opt_visited']);
+
+  // Form labels inside modals (data-i18n already on most; these are the ones hardcoded)
+  const lbl = (id, key) => { const el=v(id); if(el) el.textContent=t(key); };
+  lbl('lbl-farm-emp','form_employer'); lbl('lbl-farm-loc','form_location'); lbl('lbl-farm-rate','form_hourly');
+  lbl('lbl-farm-start','form_start'); lbl('lbl-farm-end','form_end'); lbl('lbl-farm-type','form_work_type');
+  lbl('lbl-farm-notes','form_notes'); lbl('lbl-bedit-total','form_total_budget');
+  lbl('lbl-exp-cat','form_category'); lbl('lbl-exp-amt','form_amount'); lbl('lbl-exp-name','form_desc');
+  lbl('lbl-exp-date','form_date'); lbl('lbl-exp-note','form_note_opt');
+  lbl('lbl-job-co','form_company'); lbl('lbl-job-loc','form_location'); lbl('lbl-job-status','form_status');
+  lbl('lbl-job-type','form_job_type'); lbl('lbl-job-pay','form_pay'); lbl('lbl-job-contact','form_contact');
+  lbl('lbl-job-date','form_applied_date'); lbl('lbl-job-notes','form_notes');
+  lbl('lbl-tr-state','form_state'); lbl('lbl-tr-dstatus','form_dest_status');
+  lbl('lbl-tr-city','form_city'); lbl('lbl-tr-arr','form_arrive'); lbl('lbl-tr-dep','form_depart');
+  lbl('lbl-tr-notes','form_todo_notes');
+}
+
+// ══════════════════════════════════════════
+// DARK MODE
+// ══════════════════════════════════════════
+function toggleDark() {
+  isDark = !isDark; sv(K.dark, isDark);
+  applyDark();
+}
+function applyDark() {
+  document.documentElement.classList.toggle('dark', isDark);
+  document.getElementById('dark-btn').textContent = isDark ? '☀️' : '🌙';
+}
+
+// ══════════════════════════════════════════
+// VISA TIER
+// ══════════════════════════════════════════
+function setVisaTier(n) {
+  visaTier = n; sv(K.tier, n);
+  document.getElementById('vt-88').classList.toggle('active', n === 88);
+  document.getElementById('vt-179').classList.toggle('active', n === 179);
+  renderFarm(); renderOV();
+}
+function applyVisaTier() {
+  document.getElementById('vt-88').classList.toggle('active', visaTier === 88);
+  document.getElementById('vt-179').classList.toggle('active', visaTier === 179);
+}
+
+// ══════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════
+const uid  = () => Date.now().toString(36) + Math.random().toString(36).slice(2,5);
+const days = (s,e) => { if(!s) return 0; const d=Math.floor((new Date(e||new Date())-new Date(s))/86400000); return Math.max(0,d+1); };
+const fmtD = d => d ? new Date(d).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '—';
+const fmtA = n => 'A$' + (parseFloat(n)||0).toLocaleString('en-AU',{minimumFractionDigits:0,maximumFractionDigits:0});
+const toast = m => { const el=document.getElementById('toast'); el.textContent=m; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2400); };
+const v = id => document.getElementById(id);
+
+const CAT_IC = {accommodation:'🏠',food:'🍜',transport:'🚌',visa:'✈️',insurance:'🏥',activities:'🎯',equipment:'🎒',other:'📦'};
+const CAT_BG = {accommodation:'#FFF0ED',food:'#EEF5EF',transport:'#EEF0F8',visa:'#FFF8EE',insurance:'#E8F4FF',activities:'#F8F0FF',equipment:'#F5EFE6',other:'#F5F5F5'};
+const JOB_IC  = {farm:'🌾',hospitality:'🍽️',construction:'🔨',retail:'🛍️',cleaning:'🧹',other:'⚙️'};
+const FARM_IC = {fruit:'🍓',harvest:'🌾',farmhand:'🐄',fishing:'🐟',construction:'🔨',other:'⚙️'};
+const ST_LABEL = {applied:'Applied',interview:'Interview',offer:'Offer',working:'Working',rejected:'Rejected'};
+const TSTAT_L = {planned:'📅',current:'📍',visited:'✅'};
+const STATE_E = {NSW:'🌉',QLD:'☀️',VIC:'☕',WA:'🌅',SA:'🍷',TAS:'🏔️',NT:'🦘',ACT:'🏛️'};
+
+// ══════════════════════════════════════════
+// MODALS
+// ══════════════════════════════════════════
+function openM(type, id) {
+  const clr = ids => ids.forEach(i=>{const el=v(i);if(el)el.value='';});
+
+  if (type==='cl') {
+    v('cl-eid').value=''; v('cl-text').value=''; v('cl-prio').value='med'; v('cl-date').value='';
+    v('cl-mtitle').textContent = t('mtitle_cl_add');
+    if(id){ const item=clCustom.find(i=>i.id===id); if(item){ v('cl-eid').value=item.id; v('cl-text').value=item.t||''; v('cl-prio').value=item.p||'med'; v('cl-date').value=item.d||''; v('cl-mtitle').textContent=t('mtitle_cl_edit'); } }
+    v('m-cl').classList.add('open'); return;
+  }
+  if (type==='farm') {
+    clr(['farm-eid','farm-emp','farm-loc','farm-rate','farm-s','farm-e','farm-notes']);
+    v('farm-type').value='fruit'; v('farm-mtitle').textContent=t('mtitle_farm_add');
+    if(id){const f=farms.find(x=>x.id===id);if(f){v('farm-eid').value=f.id;v('farm-emp').value=f.emp||'';v('farm-loc').value=f.loc||'';v('farm-rate').value=f.rate||'';v('farm-s').value=f.s||'';v('farm-e').value=f.e||'';v('farm-type').value=f.type||'other';v('farm-notes').value=f.notes||'';v('farm-mtitle').textContent=t('mtitle_farm_edit');}}
+  } else if(type==='bedit') {
+    v('b-input').value=bud.total||'';
+  } else if(type==='expense') {
+    clr(['exp-eid','exp-amt','exp-name','exp-date','exp-note']); v('exp-cat').value='accommodation'; v('exp-mtitle').textContent=t('mtitle_exp_add');
+    if(id){const e=exps.find(x=>x.id===id);if(e){v('exp-eid').value=e.id;v('exp-cat').value=e.cat||'other';v('exp-amt').value=e.amt||'';v('exp-name').value=e.name||'';v('exp-date').value=e.date||'';v('exp-note').value=e.note||'';v('exp-mtitle').textContent=t('mtitle_exp_edit');}}
+  } else if(type==='job') {
+    clr(['job-eid','job-co','job-loc','job-pay','job-contact','job-date','job-notes']); v('job-status').value='applied'; v('job-type').value='farm'; v('job-mtitle').textContent=t('mtitle_job_add');
+    if(id){const j=jobs.find(x=>x.id===id);if(j){v('job-eid').value=j.id;v('job-co').value=j.co||'';v('job-loc').value=j.loc||'';v('job-status').value=j.status||'applied';v('job-type').value=j.type||'farm';v('job-pay').value=j.pay||'';v('job-contact').value=j.contact||'';v('job-date').value=j.date||'';v('job-notes').value=j.notes||'';v('job-mtitle').textContent=t('mtitle_job_edit');}}
+  } else if(type==='travel') {
+    clr(['tr-eid','tr-city','tr-arr','tr-dep','tr-notes']); v('tr-state').value='QLD'; v('tr-status').value='planned'; v('travel-mtitle').textContent=t('mtitle_travel_add');
+    if(id){const tr=travels.find(x=>x.id===id);if(tr){v('tr-eid').value=tr.id;v('tr-state').value=tr.state||'QLD';v('tr-status').value=tr.status||'planned';v('tr-city').value=tr.city||'';v('tr-arr').value=tr.arr||'';v('tr-dep').value=tr.dep||'';v('tr-notes').value=tr.notes||'';v('travel-mtitle').textContent=t('mtitle_travel_edit');}}
+  }
+  v('m-'+type).classList.add('open');
+}
+function closeM(type){ v('m-'+type).classList.remove('open'); }
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
+
+// ══════════════════════════════════════════
+// SAVE / DELETE
+// ══════════════════════════════════════════
+function saveCL() {
+  const txt=v('cl-text').value.trim(); if(!txt){alert(t('alert_task'));return;}
+  const eid=v('cl-eid').value;
+  const entry={id:eid||uid(),t:txt,p:v('cl-prio').value,d:v('cl-date').value.trim(),fixed:false};
+  if(eid){clCustom=clCustom.map(i=>i.id===eid?entry:i);toast(t('toast_updated'));}
+  else{clCustom.push(entry);toast(t('toast_added'));}
+  sv(K.cl_items,clCustom); closeM('cl'); renderCL(); renderOV();
+}
+function delCL(id){if(!confirm(t('alert_delete')))return;clCustom=clCustom.filter(i=>i.id!==id);delete checks[id];sv(K.cl_items,clCustom);sv(K.checks,checks);renderCL();renderOV();toast(t('toast_deleted'));}
+function togCL(id){checks[id]=!checks[id];sv(K.checks,checks);renderCL();renderOV();}
+
+function saveFarm(){
+  const emp=v('farm-emp').value.trim(), s=v('farm-s').value;
+  if(!emp){alert(t('alert_employer'));return;} if(!s){alert(t('alert_start'));return;}
+  const eid=v('farm-eid').value;
+  const entry={id:eid||uid(),emp,loc:v('farm-loc').value.trim(),rate:v('farm-rate').value,s,e:v('farm-e').value,type:v('farm-type').value,notes:v('farm-notes').value.trim()};
+  if(eid){farms=farms.map(f=>f.id===eid?entry:f);toast(t('toast_updated'));}else{farms.push(entry);toast(t('toast_added'));}
+  sv(K.farm,farms);closeM('farm');renderFarm();renderOV();
+}
+function delFarm(id){if(!confirm(t('alert_delete')))return;farms=farms.filter(f=>f.id!==id);sv(K.farm,farms);renderFarm();renderOV();toast(t('toast_deleted'));}
+
+function saveBud(){const val=parseFloat(v('b-input').value);if(!val||val<=0){alert(t('alert_budget'));return;}bud.total=val;sv(K.bud,bud);closeM('bedit');renderBud();renderOV();toast(t('toast_budget'));}
+
+function saveExp(){
+  const name=v('exp-name').value.trim(), amt=parseFloat(v('exp-amt').value);
+  if(!name){alert(t('alert_exp_desc'));return;} if(!amt||amt<=0){alert(t('alert_exp_amt'));return;}
+  const eid=v('exp-eid').value;
+  const entry={id:eid||uid(),cat:v('exp-cat').value,amt,name,date:v('exp-date').value,note:v('exp-note').value.trim()};
+  if(eid){exps=exps.map(e=>e.id===eid?entry:e);toast(t('toast_updated'));}else{exps.push(entry);toast(t('toast_added'));}
+  sv(K.exp,exps);closeM('expense');renderBud();renderOV();
+}
+function delExp(id){if(!confirm(t('alert_delete')))return;exps=exps.filter(e=>e.id!==id);sv(K.exp,exps);renderBud();renderOV();toast(t('toast_deleted'));}
+
+function saveJob(){
+  const co=v('job-co').value.trim(); if(!co){alert(t('alert_company'));return;}
+  const eid=v('job-eid').value;
+  const entry={id:eid||uid(),co,loc:v('job-loc').value.trim(),status:v('job-status').value,type:v('job-type').value,pay:v('job-pay').value,contact:v('job-contact').value.trim(),date:v('job-date').value,notes:v('job-notes').value.trim()};
+  if(eid){jobs=jobs.map(j=>j.id===eid?entry:j);toast(t('toast_updated'));}else{jobs.push(entry);toast(t('toast_added'));}
+  sv(K.job,jobs);closeM('job');renderJobs();renderOV();
+}
+function delJob(id){if(!confirm(t('alert_delete')))return;jobs=jobs.filter(j=>j.id!==id);sv(K.job,jobs);renderJobs();renderOV();toast(t('toast_deleted'));}
+
+function saveTravel(){
+  const city=v('tr-city').value.trim(); if(!city){alert(t('alert_city'));return;}
+  const eid=v('tr-eid').value;
+  const entry={id:eid||uid(),state:v('tr-state').value,status:v('tr-status').value,city,arr:v('tr-arr').value,dep:v('tr-dep').value,notes:v('tr-notes').value.trim()};
+  if(eid){travels=travels.map(x=>x.id===eid?entry:x);toast(t('toast_updated'));}else{travels.push(entry);toast(t('toast_added'));}
+  sv(K.travel,travels);closeM('travel');renderTravel();
+}
+function delTravel(id){if(!confirm(t('alert_delete')))return;travels=travels.filter(x=>x.id!==id);sv(K.travel,travels);renderTravel();toast(t('toast_deleted'));}
+
+// ══════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════
+function allCL(){ return [...LANGS[currentLang].cl.map((x,i)=>({...x,id:'c'+(i+1),fixed:true})), ...clCustom]; }
+
+function renderCL(){
+  const all=allCL(), pending=all.filter(i=>!checks[i.id]).length;
+  v('cl-tag').textContent = pending===0 ? t('all_done') : pending + t('pending_sfx');
+  const PC={high:'ph',med:'pm',low:'pl'};
+  const PL={high:t('form_priority_h'),med:t('form_priority_m'),low:t('form_priority_l')};
+  v('cl-list').innerHTML=all.map(i=>`
+    <div class="ci" data-done="${!!checks[i.id]}">
+      <input type="checkbox" class="cbox" id="${i.id}" ${checks[i.id]?'checked':''} onchange="togCL('${i.id}')">
+      <label class="clabel" for="${i.id}">${i.t}</label>
+      <span class="cprio ${PC[i.p]||'pl'}">${PL[i.p]||i.p}</span>
+      <span class="cdate">${i.d||''}</span>
+      ${!i.fixed?`<div class="acts" style="margin-left:4px;flex-shrink:0;"><button class="btn btn-ghost btn-sm" onclick="openM('cl','${i.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="delCL('${i.id}')">🗑️</button></div>`:''}
+    </div>`).join('');
+}
+
+function renderFarm(){
+  const target = visaTier;
+  const total=Math.min(target,farms.reduce((s,f)=>s+days(f.s,f.e),0));
+  const left=Math.max(0,target-total), pct=Math.round((total/target)*100);
+  v('f-done').textContent=total; v('f-left').textContent=left; v('f-pct').textContent=pct+'%';
+  v('farm-tag').textContent=total+' / '+target;
+  const grid=v('day-grid'); grid.innerHTML='';
+  for(let i=1;i<=target;i++){
+    const d=document.createElement('div');
+    if(i<=total) d.className='ddot done';
+    else if(i===total+1) d.className='ddot current';
+    else d.className='ddot';
+    d.title='Day '+i; grid.appendChild(d);
+  }
+  const list=v('farm-list');
+  if(!farms.length){list.innerHTML=`<div class="empty"><div class="ei">🌾</div>${t('empty_farm')}</div>`;return;}
+  list.innerHTML=farms.map(f=>`
+    <div class="farm-card">
+      <div class="farm-head">
+        <div><div class="farm-name">${FARM_IC[f.type]||'⚙️'} ${f.emp}</div><div class="farm-loc">📍 ${f.loc||'—'}</div></div>
+        <div class="acts"><button class="btn btn-ghost btn-sm" onclick="openM('farm','${f.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="delFarm('${f.id}')">🗑️</button></div>
+      </div>
+      <div class="farm-meta">
+        <span>📅 <strong>${fmtD(f.s)}</strong> → <strong>${f.e?fmtD(f.e):t('present')}</strong></span>
+        <span>🗓️ <strong style="color:var(--sage)">${days(f.s,f.e)} days</strong></span>
+        ${f.rate?`<span>💰 <strong>A$${f.rate}/hr</strong></span>`:''}
+      </div>
+      ${f.notes?`<div style="font-size:0.74rem;color:var(--text-muted);margin-top:7px;font-style:italic;">${f.notes}</div>`:''}
+    </div>`).join('');
+}
+
+function renderBud(){
+  const total=parseFloat(bud.total)||0, spent=exps.reduce((s,e)=>s+(parseFloat(e.amt)||0),0);
+  const left=total-spent, pct=total>0?Math.min(100,Math.round((spent/total)*100)):0;
+  v('b-total').textContent=fmtA(total); v('b-spent').textContent=fmtA(spent);
+  v('bud-tag').textContent=fmtA(left)+' left'; v('b-bar').style.width=pct+'%';
+  const list=v('exp-list');
+  if(!exps.length){list.innerHTML=`<div class="empty"><div class="ei">💳</div>${t('empty_exp')}</div>`;return;}
+  list.innerHTML=[...exps].sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(e=>`
+    <div class="exp-item">
+      <div class="exp-ico" style="background:${CAT_BG[e.cat]||'#f5f5f5'}">${CAT_IC[e.cat]||'📦'}</div>
+      <div style="flex:1"><div class="exp-name">${e.name}</div><div class="exp-sub">${e.date?fmtD(e.date):''}${e.note?' · '+e.note:''}</div></div>
+      <div class="exp-amt">${fmtA(e.amt)}</div>
+      <div class="acts" style="margin-left:8px;"><button class="btn btn-ghost btn-sm" onclick="openM('expense','${e.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="delExp('${e.id}')">🗑️</button></div>
+    </div>`).join('');
+}
+
+function renderJobs(){
+  v('job-tag').textContent=jobs.length;
+  const list=v('job-list');
+  if(!jobs.length){list.innerHTML=`<div class="empty"><div class="ei">💼</div>${t('empty_job')}</div>`;return;}
+  list.innerHTML=jobs.map(j=>`
+    <div class="job-item">
+      <div class="job-row">
+        <div class="job-ico">${JOB_IC[j.type]||'⚙️'}</div>
+        <div style="flex:1">
+          <div class="job-name">${j.co}</div>
+          <div class="job-loc">📍 ${j.loc||'—'}</div>
+          <div class="job-meta">${j.date?'📅 '+fmtD(j.date):''}${j.pay?' · 💰 A$'+j.pay+'/hr':''}${j.contact?' · '+j.contact:''}</div>
+          ${j.notes?`<div style="font-size:0.73rem;color:var(--text-muted);margin-top:4px;font-style:italic;">${j.notes}</div>`:''}
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
+          <div class="jstatus s-${j.status}">${ST_LABEL[j.status]||j.status}</div>
+          <div class="acts"><button class="btn btn-ghost btn-sm" onclick="openM('job','${j.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="delJob('${j.id}')">🗑️</button></div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function renderTravel(){
+  const list=v('travel-list');
+  if(!travels.length){list.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="ei">🗺️</div>${t('empty_travel')}</div>`;return;}
+  const grp={};
+  travels.forEach(tr=>{if(!grp[tr.state])grp[tr.state]=[];grp[tr.state].push(tr);});
+  list.innerHTML=Object.keys(grp).map(state=>`
+    <div>
+      <div class="tstate-header"><div class="tstate-lbl">${STATE_E[state]||'🌏'} ${state}</div></div>
+      ${grp[state].map(d=>`
+        <div class="dest-item">
+          <div style="flex:1">
+            <div class="dest-city">📍 ${d.city}</div>
+            ${(d.arr||d.dep)?`<div class="dest-dates">${d.arr?fmtD(d.arr):'?'} → ${d.dep?fmtD(d.dep):'?'}</div>`:''}
+            ${d.notes?`<div class="dest-notes">${d.notes}</div>`:''}
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
+            <div class="dstatus ds-${d.status}">${TSTAT_L[d.status]||'📅'}</div>
+            <div class="acts"><button class="btn btn-ghost btn-sm" onclick="openM('travel','${d.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="delTravel('${d.id}')">🗑️</button></div>
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function renderOV(){
+  const all=allCL();
+  const dc=all.filter(i=>checks[i.id]).length, cpct=Math.round((dc/all.length)*100);
+  v('ov-c').style.width=cpct+'%'; v('ov-cv').textContent=dc+' / '+all.length;
+  const fd=Math.min(visaTier,farms.reduce((s,f)=>s+days(f.s,f.e),0));
+  v('ov-f').style.width=Math.round((fd/visaTier)*100)+'%'; v('ov-fv').textContent=fd+' / '+visaTier;
+  const tot=parseFloat(bud.total)||0, sp=exps.reduce((s,e)=>s+(parseFloat(e.amt)||0),0);
+  const bpct=tot>0?Math.min(100,Math.round((sp/tot)*100)):0;
+  v('ov-b').style.width=bpct+'%'; v('ov-bv').textContent=tot>0?fmtA(sp)+' / '+fmtA(tot):t('set_budget');
+  const jpct=Math.min(100,jobs.length*10);
+  v('ov-j').style.width=jpct+'%'; v('ov-jv').textContent=jobs.length;
+}
+
+// ══════════════════════════════════════════
+// FILTER BUTTONS
+// ══════════════════════════════════════════
+document.addEventListener('click',e=>{
+  if(!e.target.classList.contains('fbtn')) return;
+  const body=e.target.closest('.card-body');
+  body.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  e.target.classList.add('active');
+  const f=e.target.dataset.f;
+  body.querySelectorAll('.ci').forEach(item=>{
+    const done=item.dataset.done==='true';
+    item.style.display=f==='all'?'':(f==='todo'?done?'none':'':!done?'none':'');
+  });
+});
+
+// ══════════════════════════════════════════
+// SMOOTH SCROLL
+// ══════════════════════════════════════════
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault(); const tgt=document.querySelector(a.getAttribute('href'));
+  if(tgt) tgt.scrollIntoView({behavior:'smooth',block:'start'});
+}));
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+applyDark();
+applyVisaTier();
+setLang(currentLang);  // applies translations + renders everything
+
+// ══════════════════════════════════════════
+// PWA — SERVICE WORKER REGISTRATION
+// ══════════════════════════════════════════
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('[PWA] SW registered:', reg.scope))
+      .catch(err => console.warn('[PWA] SW failed:', err));
+  });
+}
+</script>
+</body>
+</html>
